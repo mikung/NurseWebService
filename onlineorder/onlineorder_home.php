@@ -15,33 +15,36 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Blank Page</h1>
+                <h1>ระบบสั่งอาหารออนไลน์</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Blank Page</li>
+                    <li class="breadcrumb-item active">ระบบสั่งอาหารออนไลน์</li>
                 </ol>
             </div>
         </div>
     </div><!-- /.container-fluid -->
 </section>
 
+<?php
+    $sqlWard = "SELECT COUNT(*) AS amountPT, u.name As wardname
+                            FROM ipt i  
+                            LEFT OUTER JOIN rbh_nurse_unit u ON i.ward = u.unit_id  
+                            WHERE i.dchdate IS NULL AND i.ward = '$ward'";
+    $res = $mysql->selectOne($sqlWard);
+    $_SESSION['wardname'] = $res['wardname'];
+?>
+
 <!-- Main content -->
 <section class="content">
-    <h2 style="text-align: center; margin-top: 15px;">ระบบสั่งอาหารออนไลน์</h2>   
+    <h2 style="text-align: center; margin-top: 15px;">WARD : <?= $res['wardname'];?></h2>
     <h4 style="text-align: center; margin-bottom: 15px;">วันที่ <?= $rbh->thaiDate('','long') ?></h4>
     <!-- Default box -->
     <div class="card card-info card-outline">
         <div class="card-header">
-            <?php 
-                $sqlWard = "SELECT COUNT(*) AS amountPT, u.name As wardname
-                            FROM ipt i  
-                            LEFT OUTER JOIN rbh_nurse_unit u ON i.ward = u.unit_id  
-                            WHERE i.dchdate IS NULL AND i.ward = '$ward'";
-                $res = $mysql->selectOne($sqlWard);
-            ?>
-            <h3 class="card-title">WARD : <?= $res['wardname'];?></h3>
+
+            <h3 class="card-title">&nbsp;</h3>
             <!-- tools box -->
             <div class="card-tools">
                 <p>จำนวนคนไข้ในหอผู้ป่วย <?= $res['amountPT'];?> คน</p>
@@ -49,9 +52,9 @@
             <!-- /. tools -->
         </div>
         <div class="card-body">         
-            <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+            <table id="example1" class="col-lg-8 offset-lg-2 table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
                 <thead style="text-align: center;">
-                    <tr role="row">
+                    <tr role="row" style="height: 50px;" class="bg-info">
                         <th>เตียง</th>
                         <th>ชื่อ-นามสกุล</th>
                         <th>ประเภทอาหาร</th>
@@ -73,12 +76,15 @@
                         $result = $mysql->selectAll($sql);
                         if ($result) {
                             foreach ($result as $row) {?>
-                               <tr>
+                               <tr style="height: 30px;">
                                     <td align="center"><?= $row['bedno'] ?></td>
-                                    <td align="left"><?= $row['ptname'] ?></td>
+                                    <td align="left"><?= '&nbsp;'.$row['ptname'] ?></td>
                                     <td align="center"><?= $row['short'] ?></td>
                                     <td align="center"><?= $row['food_extra']?></td>
-                                    <td align="center"><a href="onlineorder_page2.php?hn=<?= $row['hn'] ?>&ptname=<?= $row['ptname'] ?>"><i class="fa fa-pencil-square-o"></i></a></td>
+                                    <td align="center">
+                                        <a href="onlineorder_page2.php?hn=<?= $row['hn'] ?>">
+                                            <i class="fa fa-pencil-square-o "></i></a>
+                                    </td>
                                 </tr>
                     <?php
                             }

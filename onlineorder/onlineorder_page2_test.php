@@ -90,37 +90,16 @@
     }
 
     function checkboxTable(foodtype) {
-        var htmlNormal = "";
-        var htmlSpecific = "";
-        $.ajax({
-            type: 'GET',
-            url: 'dataNormal.php?type=' + foodtype,
-            dataType: 'json',
-            cache: false,
-            success: function (response) {
-                for (var i = 0; i < response.length; i++) {
-                    console.log("test" + response[i]['fooditems']);
-                    htmlNormal += "<tr><td><input type='checkbox' class='minimal' name='normalfood[]'"+
-                        "value='"+response[i]['fooditems']+"'>&nbsp;" +
-                         response[i]['fooditems'] + "</td></tr>";
-                }
-                $('#foodNormal').html(htmlNormal);
-            }
-        });
+        var normal = "<?= $res['food_normal']?>";
+        var specific = "<?= $res['food_specific']?>";
 
         $.ajax({
             type: 'GET',
-            url: 'dataSpecific.php?type=' + foodtype,
+            url: 'content_dataNormal.php?type='+foodtype,
             dataType: 'json',
             cache: false,
             success: function (response) {
-                for (var i = 0; i < response.length; i++) {
-                    console.log("test" + response[i]['fooditems']);
-                    htmlSpecific += "<tr><td><input type='checkbox' class='minimal' name='specialfood[]'"+
-                        "value='"+response[i]['fooditems']+"'>&nbsp;" +
-                        response[i]['fooditems'] + "</td></tr>";
-                }
-                $('#foodSpecific').html(htmlSpecific);
+                $('#divchk').html(response);
             }
         });
     }
@@ -251,7 +230,7 @@
 
                 <!-- DIV CHECKBOX -->
                 <div id="divchk" class="table-responsive">
-                    <table class="col-sm-8 offset-sm-2 table-bordered">
+                    <!--<table class="col-sm-8 offset-sm-2 table-bordered">
                         <tr>
                         <tr style="height: 50px;">
                             <td width="50%" class="bg bg-info" align="center">อาหารทั่วไป</td>
@@ -269,7 +248,7 @@
                             </table>
                         </td>
                         </tr>
-                    </table>
+                    </table>-->
                     <p>&nbsp;</p>
                 </div>
                 <!-- END DIV CHECKBOX -->

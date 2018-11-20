@@ -39,7 +39,7 @@ $worktime=$result['worktime_int']+1;
 
 <!-- Main content -->
 <section class="content">
-  <table width="100%" border="0"  cellspacing="0" cellpadding="0">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
                       <tr> 
                             <td colspan="4" align="center"><strong>&nbsp;</strong></td>
                         </tr>
