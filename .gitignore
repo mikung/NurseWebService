@@ -1,6 +1,6 @@
 .idea/
 build/
+conn/
 dist/
 pages/
 plugins/
-conn/
